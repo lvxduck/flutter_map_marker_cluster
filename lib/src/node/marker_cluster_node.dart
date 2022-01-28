@@ -33,9 +33,10 @@ class MarkerClusterNode {
 
   LatLng get point {
     // Not sure if this is ideal to do ?? LatLng(0, 0)
-    var swPoint = map.project(bounds.southWest ?? LatLng(0, 0));
-    var nePoint = map.project(bounds.northEast ?? LatLng(0, 0));
-    return map.unproject((swPoint + nePoint) / 2);
+    // var swPoint = map.project(bounds.southWest ?? LatLng(0, 0));
+    // var nePoint = map.project(bounds.northEast ?? LatLng(0, 0));
+    // return map.unproject((swPoint + nePoint) / 2);
+    return markers.first.point;
   }
 
   void addChild(dynamic child) {
