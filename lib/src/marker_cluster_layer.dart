@@ -6,7 +6,6 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_map_marker_cluster/src/anim_type.dart';
 import 'package:flutter_map_marker_cluster/src/core/distance_grid.dart';
 import 'package:flutter_map_marker_cluster/src/core/quick_hull.dart';
-import 'package:flutter_map_marker_cluster/src/marker_cluster_layer_options.dart';
 import 'package:flutter_map_marker_cluster/src/node/marker_cluster_node.dart';
 import 'package:flutter_map_marker_cluster/src/node/marker_node.dart';
 import 'package:flutter_map_marker_popup/extension_api.dart';
@@ -383,6 +382,7 @@ class _MarkerClusterLayerState extends State<MarkerClusterLayer>
     final popupOptions = widget.options.popupOptions;
     if (popupOptions != null) {
       layers.add(PopupLayer(
+        popupState: PopupState.maybeOf(context, listen: false) ?? PopupState(),
         popupBuilder: popupOptions.popupBuilder,
         popupSnap: popupOptions.popupSnap,
         popupController: popupOptions.popupController,
@@ -507,8 +507,11 @@ class _MarkerClusterLayerState extends State<MarkerClusterLayer>
 
       if (widget.options.popupOptions != null) {
         final popupOptions = widget.options.popupOptions!;
-        popupOptions.markerTapBehavior
-            .apply(marker.marker, popupOptions.popupController);
+        popupOptions.markerTapBehavior.apply(
+          marker.marker,
+          PopupState.maybeOf(context, listen: false) ?? PopupState(),
+          popupOptions.popupController,
+        );
       }
 
       // This is handled as an optional callback rather than leaving the package
